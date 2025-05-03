@@ -1,0 +1,42 @@
+name: Undeploy Sharedflow
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      apigeeEnv:
+        description: "Apigee environment where apiproxy/ sharedflow is deployed"
+        type: string
+        required: true
+      resourceName:
+        description: "Name of the apiproxy/sharedflow"
+        type: string
+        required: true
+      endpointType:
+        description: "Apigee Admin API type"
+        type: choice
+        default: "apis"
+        options:
+          - "apis"
+          - "sharedflows"
+ 
+env:
+  REGION: europe-west2
+  CB_PATH: cloud/apigee/undeploy-apigee-resource.yaml
+  APIGEE_HOST: 123
+  APIGEE_ENV: ${{ github.event.inputs.apigeeEnv }}
+  RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
+  ENDPOINT_TYPE: ${{ github.event.inputs.endpointType }}
+ 
+jobs:
+  forfun:
+    name: Test manual trigger
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: fun1
+        run: |
+          echo "$CB_PATH"
+          echo "APIGEE_HOST"
+          echo "$APIGEE_ENV"
+          echo "$RESOURCE_NAME"
+          echo "$ENDPOINT_TYPE"
